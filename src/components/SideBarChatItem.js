@@ -1,4 +1,5 @@
 import React from 'react';
+import user from '../icons/user.png';
 
 const SideBarChatItem = () => {
     return (
@@ -6,10 +7,7 @@ const SideBarChatItem = () => {
             {/* active_chat */}
             <div className="chat_people">
                 <div className="chat_img">
-                    <img
-                        src="https://ptetutorials.com/images/user-profile.png"
-                        alt="sunil"
-                    />
+                    <img src={user} alt="sunil" />
                 </div>
                 <div className="chat_ib">
                     <h5>Some random name</h5>

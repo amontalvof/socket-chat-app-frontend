@@ -16,6 +16,11 @@ img {
     border-right: 1px solid #c4c4c4;
 }
 
+.messaging {
+    display: flex;
+    justify-content: center;
+}
+
 .inbox_msg {
     border: 1px solid #c4c4c4;
     clear: both;
@@ -233,4 +238,10 @@ textarea {
     right: 0;
     width: 60%;
     text-align: center;
+}
+
+@media only screen and (min-width: 1050px) {
+    .inbox_msg {
+        width: 80%;
+    }
 }
