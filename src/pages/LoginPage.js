@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -7,6 +7,19 @@ const LoginPage = () => {
         password: '123456',
         rememberMe: false,
     });
+
+    useEffect(() => {
+        const email = localStorage.getItem('email');
+        if (email) {
+            setForm({
+                ...form,
+                email,
+                rememberMe: true,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const handleChange = ({ target }) => {
         const { name, value } = target;
         setForm({ ...form, [name]: value });
@@ -16,7 +29,12 @@ const LoginPage = () => {
     };
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(form);
+        if (form.rememberMe) {
+            localStorage.setItem('email', form.email);
+        } else {
+            localStorage.removeItem('email');
+        }
+        // TODO: llamar al backend
     };
 
     return (
