@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { AuthContext } from '../auth/AuthContext';
 
 const LoginPage = () => {
+    const { login } = useContext(AuthContext);
     const [form, setForm] = useState({
         email: 'test1@test.com',
         password: '123456',
@@ -11,13 +14,12 @@ const LoginPage = () => {
     useEffect(() => {
         const email = localStorage.getItem('email');
         if (email) {
-            setForm({
+            setForm((form) => ({
                 ...form,
                 email,
                 rememberMe: true,
-            });
+            }));
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleChange = ({ target }) => {
@@ -27,14 +29,21 @@ const LoginPage = () => {
     const toggleCheck = () => {
         setForm({ ...form, rememberMe: !form.rememberMe });
     };
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (form.rememberMe) {
             localStorage.setItem('email', form.email);
         } else {
             localStorage.removeItem('email');
         }
-        // TODO: llamar al backend
+        const { email, password } = form;
+        const ok = await login(email, password);
+        if (!ok) {
+            Swal.fire('Error', 'Please verify username and password.', 'error');
+        }
+    };
+    const allOk = () => {
+        return form.email.length > 0 && form.password.length > 0;
     };
 
     return (
@@ -89,7 +98,13 @@ const LoginPage = () => {
             </div>
 
             <div className="container-login100-form-btn m-t-17">
-                <button className="login100-form-btn">Login</button>
+                <button
+                    className="login100-form-btn"
+                    type="submit"
+                    disabled={!allOk()}
+                >
+                    Login
+                </button>
             </div>
         </form>
     );
