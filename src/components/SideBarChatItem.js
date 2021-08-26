@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import userLogo from '../icons/user.png';
 import { ChatContext } from '../context/chat/chatContext';
 import { types } from '../types/types';
+import { fetchWithToken } from '../helpers/fetch';
 
 const SideBarChatItem = ({ user }) => {
     const { name, online, uid } = user;
@@ -11,8 +12,14 @@ const SideBarChatItem = ({ user }) => {
         dispatch,
     } = useContext(ChatContext);
 
-    const handleClick = () => {
+    const handleClick = async () => {
         dispatch({ type: types.activateChat, payload: uid });
+
+        // * Load chat messages
+        const resp = await fetchWithToken(`messages/${user.uid}`);
+        dispatch({ type: types.loadMessages, payload: resp.messages });
+
+        // TODO: mover el scroll
     };
 
     return (
