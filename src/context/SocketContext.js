@@ -3,6 +3,7 @@ import { AuthContext } from '../auth/AuthContext';
 import { ChatContext } from './chat/chatContext';
 import useSocket from '../hooks/useSocket';
 import { types } from '../types/types';
+import { scrollToBottom } from '../helpers/scrollToBottom';
 
 export const SocketContext = createContext();
 
@@ -44,8 +45,8 @@ export const SocketProvider = ({ children }) => {
                 type: types.newMessage,
                 payload: message,
             });
+            scrollToBottom({ htmlId: 'messages', duration: 250 });
         });
-        // TODO: mover scroll al final
     }, [socket, dispatch]);
 
     return (

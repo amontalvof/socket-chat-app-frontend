@@ -4,6 +4,7 @@ import userLogo from '../icons/user.png';
 import { ChatContext } from '../context/chat/chatContext';
 import { types } from '../types/types';
 import { fetchWithToken } from '../helpers/fetch';
+import { scrollToBottom } from '../helpers/scrollToBottom';
 
 const SideBarChatItem = ({ user }) => {
     const { name, online, uid } = user;
@@ -19,7 +20,7 @@ const SideBarChatItem = ({ user }) => {
         const resp = await fetchWithToken(`messages/${user.uid}`);
         dispatch({ type: types.loadMessages, payload: resp.messages });
 
-        // TODO: mover el scroll
+        scrollToBottom({ htmlId: 'messages', duration: 0 });
     };
 
     return (

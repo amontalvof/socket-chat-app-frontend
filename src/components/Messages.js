@@ -15,7 +15,7 @@ const Messages = () => {
 
     return (
         <div className="mesgs">
-            <div className="msg_history">
+            <div className="msg_history" id="messages">
                 {messages.map((item) =>
                     item.to === uid ? (
                         <IncomingMessage key={item._id} msg={item} />

@@ -9,6 +9,13 @@ import { types } from '../../types/types';
 
 export const chatReducer = (state, action) => {
     switch (action.type) {
+        case types.logout:
+            return {
+                uid: '',
+                chatActive: null,
+                users: [],
+                messages: [],
+            };
         case types.usersLoaded:
             return {
                 ...state,

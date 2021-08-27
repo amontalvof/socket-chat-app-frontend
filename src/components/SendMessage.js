@@ -20,18 +20,11 @@ function SendMessage() {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (message.length === 0) return;
-        // TODO: emitir evento de socket
-        // {
-        //     from
-        //     to
-        //     message
-        // }
         socket.emit('personal-message', {
             from: uid,
             to: chatActive,
             message,
         });
-        // TODO: Hacer el dispatch del mensaje
         setMessage('');
     };
 
