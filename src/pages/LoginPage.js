@@ -30,16 +30,24 @@ const LoginPage = () => {
         setForm({ ...form, rememberMe: !form.rememberMe });
     };
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (form.rememberMe) {
-            localStorage.setItem('email', form.email);
-        } else {
-            localStorage.removeItem('email');
-        }
-        const { email, password } = form;
-        const ok = await login(email, password);
-        if (!ok) {
-            Swal.fire('Error', 'Please verify username and password.', 'error');
+        try {
+            event.preventDefault();
+            if (form.rememberMe) {
+                localStorage.setItem('email', form.email);
+            } else {
+                localStorage.removeItem('email');
+            }
+            const { email, password } = form;
+            const ok = await login(email, password);
+            if (!ok) {
+                Swal.fire(
+                    'Error',
+                    'Please verify username and password.',
+                    'error'
+                );
+            }
+        } catch (error) {
+            console.error(error);
         }
     };
     const allOk = () => {
