@@ -11,7 +11,7 @@ const backendUrl =
     process.env.NODE_ENV === 'production'
         ? process.env.REACT_APP_BACKEND_PRODUCTION_URL
         : process.env.REACT_APP_BACKEND_DEVELOPMENT_URL;
-
+console.log({backendUrl})
 export const SocketProvider = ({ children }) => {
     const { socket, online, connectSocket, disconnectSocket } =
         useSocket(backendUrl);
